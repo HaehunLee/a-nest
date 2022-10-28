@@ -1,7 +1,8 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { LoggerMiddleware } from './middlewares/logger.middleware';
 
 // 서버에서 env값을 비동기로 가져와 적용할 수 있음.
 // const getEnv = async () => {
@@ -21,5 +22,20 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService],
+  // origin object // for custom provider
+  // providers: [
+  //   {
+  //     provide: 'CUSTOM_KEY', // 고유한 key
+  //     useValue: 'CUSTOM_VALUE',
+  //     useClass: AppService,
+  //     useFactory: () => {},
+  //   },
+  //   AppService,
+  //   ConfigService,
+  // ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}
