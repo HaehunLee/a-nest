@@ -3,6 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
+import { UsersModule } from './users/users.module';
+import { WorkspacesModule } from './workspaces/workspaces.module';
+import { ChannelsModule } from './channels/channels.module';
+import { DmsModule } from './dms/dms.module';
 
 // 서버에서 env값을 비동기로 가져와 적용할 수 있음.
 // const getEnv = async () => {
@@ -18,7 +22,11 @@ import { LoggerMiddleware } from './middlewares/logger.middleware';
     ConfigModule.forRoot({
       isGlobal: true,
       // load: [getEnv]
-    }), // forRoot 등은 설정을 넣어줄 때
+    }),
+    UsersModule,
+    WorkspacesModule,
+    ChannelsModule,
+    DmsModule, // forRoot 등은 설정을 넣어줄 때
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService],
