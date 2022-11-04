@@ -1,7 +1,21 @@
-import { Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
+import { ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 
-@Controller('api/workspaces/:url/dms')
+@ApiTags('DM')
+@Controller('api/workspaces/:url/dms/:id/chats')
 export class DmsController {
+  @ApiParam({ name: 'url', required: true, description: '워크스페이스 url' })
+  @ApiParam({ name: 'id', required: true, description: '사용자 ID' })
+  @ApiQuery({
+    name: 'perPage',
+    required: true,
+    description: '한 번에 가져오는 개수',
+  })
+  @ApiQuery({
+    name: 'page',
+    required: true,
+    description: '불러올 페이지',
+  })
   @Get(':id/chats')
   getChat(@Query() query, @Param() param) {
     //   getChat(@Query('perPage') perPage) {
@@ -9,6 +23,6 @@ export class DmsController {
     console.log(param.id, param.url);
   }
 
-  @Post(':id/chats')
-  postChat(@Body body) {}
+  // @Post(':id/chats')
+  // postChat(@Body body) {}
 }

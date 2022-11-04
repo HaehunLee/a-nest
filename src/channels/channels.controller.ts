@@ -18,12 +18,12 @@ export class ChannelsController {
     console.log(param.id, param.url);
   }
 
-  @Post(':name/chats')
-  postChat(@Body body) {}
+  // @Post(':name/chats')
+  // postChat(@Body body) {}
 
-  @Get(':name/members')
-  getAllMembers() {}
+  // @Get(':name/members')
+  // getAllMembers() {}
 
-  @Post(':name/members')
-  inviteMembers() {}
+  // @Post(':name/members')
+  // inviteMembers() {}
 }
