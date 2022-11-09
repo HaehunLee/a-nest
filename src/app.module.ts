@@ -9,6 +9,14 @@ import { ChannelsModule } from './channels/channels.module';
 import { DmsModule } from './dms/dms.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './common/decorators/user.decorator';
+import { ChannelChats } from './entities/ChannelChats';
+import { ChannelMembers } from './entities/ChannelMembers';
+import { Channels } from './entities/Channels';
+import { DMs } from './entities/DMs';
+import { Mentions } from './entities/Mentions';
+import { Users } from './entities/Users';
+import { WorkspaceMembers } from './entities/WorkspaceMembers';
+import { Workspaces } from './entities/Workspaces';
 
 // 서버에서 env값을 비동기로 가져와 적용할 수 있음.
 // const getEnv = async () => {
@@ -36,14 +44,21 @@ import { User } from './common/decorators/user.decorator';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      // entities: ['entities/*.js'],
-      autoLoadEntities: true, // bug 발생 주의 // TypeOrmModule.forFeature 에 entities 매핑
+      entities: [
+        ChannelChats,
+        ChannelMembers,
+        Channels,
+        DMs,
+        Mentions,
+        Users,
+        WorkspaceMembers,
+        Workspaces,
+      ],
       synchronize: false,
       logging: 'all', // 로깅
       keepConnectionAlive: true, // 서버 자동 재시작 시, DB 연결 유지
       charset: 'utf8mb4', // for emoji
     }),
-    TypeOrmModule.forFeature([User]),
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService],
